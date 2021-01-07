@@ -31,7 +31,7 @@ onmessage = function (evt) {
 
   ctx.beginPath()
   ctx.lineCap = "round"
-  ctx.lineWidth = 4
+  ctx.lineWidth = 3
   ctx.strokeStyle = "#ffffff"
 
   function animate() {

@@ -1,7 +1,5 @@
 onmessage = function (evt) {
   const canvas = evt.data.canvas;
-  //canvas.width = window.innerWidth
-  //canvas.height = window.innerHeight
   const ctx = canvas.getContext(
     '2d',
     {
@@ -15,13 +13,16 @@ onmessage = function (evt) {
 
   const windowW = evt.data.windowW
   const windowH = evt.data.windowH
+  const snowflakes = evt.data.snowflakes
 
-
+  // I replaced standard random functions with this, i don't want to make a big random float just to map it to bool
   let randomValues = new Uint8Array(2);
   crypto.getRandomValues(randomValues);
 
 
-  for (let i = 0; i < 10000; i++) {
+
+  // Adding initial snowflakes
+  for (let i = 0; i < snowflakes; i++) {
     addRandomObject(randomValues, objects);
   }
 
@@ -40,23 +41,28 @@ onmessage = function (evt) {
       addRandomObject(randomValues, objects);
     }
 
-    //ctx.clear() // bleeding edge tech
+    //ctx.clear() // bleeding edge tech, requires chrome://flags/#new-canvas-2d-api and doesn't work on my machine :/
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    //draws the entire screen with one path
     ctx.beginPath()
     objects.map((obj) => {
 
+      //each snowflake is a line of zero length with wide stroke and round endcap
       ctx.moveTo(obj.x, obj.y)
-      //ctx.clearRect(obj.x+4,obj.y+4,7,7) I want to believe
       ctx.lineTo(obj.x, obj.y)
+
       obj.y = (obj.y + obj.r)
       obj.x += (Math.sin((obj.y+obj.offset)/h)) * obj.r * 0.2
       
       if (obj.y > h) {
         obj.x = randomValues[0] * (windowW/255)
+
+        //spawns offscreen
         obj.y = randomValues[1] * 4 - 1080
-        //obj.r = (randomValues[1] >> 5) + 5
         
+        //resets random values
         crypto.getRandomValues(randomValues);
       }
     })

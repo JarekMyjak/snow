@@ -11,13 +11,13 @@ for (let i = 1; i < numberOfCanvasWorkers + 1; i++) {
     const canvasID = `workerCanvas${thisCanvasScaleAndIndex.toString().replace('.', '')}`
     newCanvas.id = canvasID
 
-    // transform: scale() is weird
+    
     // paralax is handled by scaling canvases
     newCanvas.style.zIndex = (i+3).toString()
+    // transform: scale() is weird
     newCanvas.style.transform = 'scale('+((thisCanvasScaleAndIndex*2)-1)+')'
 
     document.body.appendChild(newCanvas);
-    console.log(newCanvas)
     const canvasWorker = document.getElementById(canvasID).transferControlToOffscreen();
     const w = window.innerWidth
     const h = window.innerHeight

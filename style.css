@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+  }
+  canvas {
+
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  #canvasWebgl{
+    z-index: 0;
+    opacity: 0.3;
+  }
+  
+  .worker{
+    z-index: 1;
+    transform: scale(5);
+    overflow: scroll;
+  }
+
+  #workerCanvas1{
+    transform: scale(5);
+  }
+
+  #ComputeShaderCanvas{
+    z-index: 2;
+  }
